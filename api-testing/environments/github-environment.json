@@ -1,0 +1,20 @@
+{
+  "id": "github-env",
+  "name": "GitHub Environment",
+  "values": [
+    {
+      "key": "github_username",
+      "value": "Daelijek",
+      "enabled": true
+    },
+    {
+      "key": "github_token",
+      "value": "Dias put the token here. Do not forget about it",
+      "enabled": true
+    },
+    {
+      "key": "repo_name",
+      "value": "test-repo"
+    }
+  ]
+}

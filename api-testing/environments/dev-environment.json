@@ -1,0 +1,12 @@
+{
+    "id": "dev-environment",
+    "name": "Development",
+    "values": [
+      {
+        "key": "base_url",
+        "value": "https://jsonplaceholder.typicode.com",
+        "type": "default",
+        "enabled": true
+      }
+    ]
+  }

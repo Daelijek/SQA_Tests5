@@ -1,0 +1,85 @@
+{
+  "info": {
+    "name": "GitHub CRUD Operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Repository",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{github_token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"test-repo\",\n  \"description\": \"Test repository\",\n  \"private\": false\n}"
+        },
+        "url": "https://api.github.com/user/repos"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201 Created', () => pm.response.to.have.status(201));",
+              "pm.test('Repository created', () => {",
+              "    const response = pm.response.json();",
+              "    pm.expect(response.name).to.eql('test-repo');",
+              "    pm.collectionVariables.set('repo_name', response.name);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Repository",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://api.github.com/repos/{{github_username}}/{{repo_name}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('Verify repository details', () => {",
+              "    const response = pm.response.json();",
+              "    pm.expect(response.owner.login).to.eql(pm.variables.get('github_username'));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete Repository",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{github_token}}"
+          }
+        ],
+        "url": "https://api.github.com/repos/{{github_username}}/{{repo_name}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 204 No Content', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
